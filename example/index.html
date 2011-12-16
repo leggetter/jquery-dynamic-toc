@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="../src/jquery.dynamictoc.js"></script>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+<!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style>
+  article, aside, figure, footer, header, hgroup, 
+  menu, nav, section { display: block; }
+</style>
+</head>
+<body>
+
+  <!-- This is where the table of contents is to appear -->
+  <div id="toc"></div>
+  
+  <!-- here are the items we want the dynamic toc to list -->
+  <div class="item">
+    <h2>First item</h2>
+    <p>I provide details about the first item within the page</p>
+  </div>
+  <div class="item">
+    <h2>Second item</h2>
+    <p>I provide details about the second item within the page.</p>
+  </div>
+  <div class="item">
+    <h2>Third item</h2>
+    <p>I provide details about the third and final item within the page.</p>
+  </div>
+  
+  <script>
+    $(function() {
+      $("div.item").dynamicToc({toc: "#toc", filter:true, debug: true});
+    });
+  </script>
+  
+</body>
+</html>

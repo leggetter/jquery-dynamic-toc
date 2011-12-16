@@ -4,7 +4,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="../src/jquery.dynamictoc.js"></script>
 <meta charset=utf-8 />
-<title>JS Bin</title>
+<title>jQuery Dynamic Table of Contents (ToC) plugin Examples</title>
 <!--[if IE]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -15,8 +15,12 @@
 </head>
 <body>
 
+  <h1>jQuery Dynamic Table of Contents (ToC) plugin Examples</h1>
+
+  <h2>Items with a first element header and basic content</h2>
+
   <!-- This is where the table of contents is to appear -->
-  <div id="toc"></div>
+  <div id="simple_toc"></div>
   
   <!-- here are the items we want the dynamic toc to list -->
   <div class="item">
@@ -34,7 +38,30 @@
   
   <script>
     $(function() {
-      $("div.item").dynamicToc({toc: "#toc", filter:true, debug: true});
+      $("div.item").dynamicToc({toc: "#simple_toc", filter:true, debug: true});
+    });
+  </script>
+
+  <h2>Definition Lists</h2>
+
+  <!-- This is where the table of contents is to appear -->
+  <div id="dl_toc"></div>
+  
+  <!-- here are the items we want the dynamic toc to list -->
+  <dl>
+    <dt>First item</dt>
+    <dd>I provide details about the first item within the page</dd>
+
+    <dt>Second item</dt>
+    <dd>I provide details about the second item within the page.</dd>
+
+    <dt>Third item</dt>
+    <dd>I provide details about the third and final item within the page.</dd>
+  </dl>
+
+  <script>
+    $(function() {
+      $("dl dt").dynamicToc({toc: "#dl_toc", filterOn: "+ dd", filter: true, debug: true});
     });
   </script>
   

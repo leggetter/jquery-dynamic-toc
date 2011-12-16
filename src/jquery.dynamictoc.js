@@ -4,8 +4,13 @@
 
     options = options || {};
     var defaults = {
-      sort: true,
-      debug: false
+      sort: true, // boolean: if the items should be sorted in the toc and within the page content
+      debug: false, // boolean: output debug information to console
+      filterInput: null, // a selector: the input element to be used to filter the ToC and content.
+      title: ':first-child', // a selector: Where the title text for each ToC entry is taken from. Default is take from `first-child`.
+      filterOn: null // a selector: when a user enters input into the `filterInput` this determines
+                     // what element should the filter find and look for a match within. The filter will be applied
+                     // to the current item. By default no filterOn is applied and the match is applied within the current item.
     };
     var settings = $.extend( defaults, options);
 
@@ -40,19 +45,19 @@
   
     if(settings.sort) {
       items.sortElements(function(a, b) {
-        var aText = $(a).find(":first-child").text();
-        var bText = $(b).find(":first-child").text(); 
+        var aText = getItemTitle( $(a) );
+        var bText = getItemTitle( $(b) ); 
         var compare = aText > bText;
         debug("comparing '" + aText + "' v '" + bText + "' = " + compare);
       
         return compare;
       });
     }
-    
+
     var list = $("<ul class='dynamic-toc'>");
     items.each(function(index, item) {
       item = $(item);
-      var title = item.find(":first-child").text();
+      var title = getItemTitle( item );
       var itemId = item.attr("id");
       if(itemId === undefined) {
         itemId = "_dynamicToc_" + index;
@@ -74,24 +79,38 @@
       filterInput.keyup(function() {
         var val = $.trim( $(this).val() ).toUpperCase();
         var vals = val.split(" ");
-        items.show();
-        allItems.show();
+        
+        showAll();
       
         debug("matching " + val);
         if(vals.length > 0){
         
           var hiding = 0;
+          var toCheck;
+          var filterOn;
           items.each(function(index, item) {
             item = $(item);
-            var text = item.text().toUpperCase();
+            toCheck = ""
+            if(settings.filterOn) {
+              filterOn = item.find(settings.filterOn);
+              toCheck = getItemTitle(item) + " " +
+                        filterOn.text();
+            }
+            else {
+              toCheck = item.text();
+            }
+            toCheck = toCheck.toUpperCase();
             for(var i = 0, l = vals.length; i < l; ++i){
-              var check = vals[i];
-              if(text.indexOf(check) < 0) {
+              var checkWith = vals[i];
+              if(toCheck.indexOf(checkWith) < 0) {
                 ++hiding;
                 item.hide();
                 var tocItems = allItems.has("a[href='#" + item.attr("id") + "']");
                 debug("found " + tocItems.size() + " toc items");
                 tocItems.hide();
+                if(filterOn) {
+                  filterOn.hide();
+                }
               }
             }
           
@@ -100,6 +119,24 @@
         }
       });
     }
+
+    function showAll() {
+      items.show();
+      allItems.show();
+      if(settings.filterOn) {
+        items.each(function(index, item) {
+          $(item).find(settings.filterOn).show();
+        });
+      }
+    };
+
+    function getItemTitle(item) {
+      var title = item.find(settings.title).text();
+      if(!title) {
+        title = item.text();
+      }
+      return title;
+    };
 
     function createFilterInput() {
       var html = '<div class="dynamictoc-filter">' +

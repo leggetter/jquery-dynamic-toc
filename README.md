@@ -37,6 +37,6 @@ Will show a Filter input and produce a table of contents:
 * Second item
 * Third item
 
-Example:
+# Example:
 
-An example is avalable within the `example` directory [here](../example/index.html).
+An example is avalable within the `example` directory.

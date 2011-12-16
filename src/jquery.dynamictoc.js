@@ -3,7 +3,10 @@
   $.fn.dynamicToc = function(options) {
 
     options = options || {};
-    var defaults = {};
+    var defaults = {
+      sort: true,
+      debug: false
+    };
     var settings = $.extend( defaults, options);
 
     function debug(msg) {
@@ -35,15 +38,17 @@
     }
     debug('filterInput: ' + (filterInput?filterInput.size(): 'none'));
   
-    items.sortElements(function(a, b) {
-      var aText = $(a).find(":first-child").text();
-      var bText = $(b).find(":first-child").text(); 
-      var compare = aText > bText;
-      debug("comparing '" + aText + "' v '" + bText + "' = " + compare);
+    if(settings.sort) {
+      items.sortElements(function(a, b) {
+        var aText = $(a).find(":first-child").text();
+        var bText = $(b).find(":first-child").text(); 
+        var compare = aText > bText;
+        debug("comparing '" + aText + "' v '" + bText + "' = " + compare);
+      
+        return compare;
+      });
+    }
     
-      return compare;
-    });
-  
     var list = $("<ul class='dynamic-toc'>");
     items.each(function(index, item) {
       item = $(item);

@@ -40,3 +40,5 @@ Will show a Filter input and produce a table of contents:
 # Example:
 
 An example is avalable within the `example` directory.
+
+You can also see a few examples on my [Realtime Web Technology Guide page](http://www.leggetter.co.uk/real-time-web-technologies-guide).

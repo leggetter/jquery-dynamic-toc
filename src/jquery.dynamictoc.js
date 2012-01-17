@@ -61,7 +61,7 @@
       item = $(item);
       var title = getItemTitle( item );
       var itemId = item.attr("id");
-      if(itemId === undefined) {
+      if(itemId === undefined || itemId.length === 0) {
         itemId = "_dynamicToc_" + $.fn.dynamicToc._count + "_" + index;
         item.attr("id", itemId)
       }

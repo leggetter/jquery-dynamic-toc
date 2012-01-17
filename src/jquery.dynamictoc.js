@@ -9,7 +9,7 @@
       sort: true, // boolean: if the items should be sorted in the toc and within the page content
       debug: false, // boolean: output debug information to console
       filterInput: null, // a selector: the input element to be used to filter the ToC and content.
-      title: ':first-child', // a selector: Where the title text for each ToC entry is taken from. Default is take from `first-child`.
+      title: ':first', // a selector: Where the title text for each ToC entry is taken from. Default is take from `first`.
       filterOn: null // a selector: when a user enters input into the `filterInput` this determines
                      // what element should the filter find and look for a match within. The filter will be applied
                      // to the current item. By default no filterOn is applied and the match is applied within the current item.

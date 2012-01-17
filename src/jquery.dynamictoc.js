@@ -1,7 +1,9 @@
 (function($) {
   
   $.fn.dynamicToc = function(options) {
-
+    
+    ++$.fn.dynamicToc._count;
+    
     options = options || {};
     var defaults = {
       sort: true, // boolean: if the items should be sorted in the toc and within the page content
@@ -60,7 +62,7 @@
       var title = getItemTitle( item );
       var itemId = item.attr("id");
       if(itemId === undefined) {
-        itemId = "_dynamicToc_" + index;
+        itemId = "_dynamicToc_" + $.fn.dynamicToc._count + "_" + index;
         item.attr("id", itemId)
       }
       var tocItem = $("<li title='" + title + "'>" +  
@@ -146,6 +148,9 @@
       return $(html);
     };
   };
+
+  $.fn.dynamicToc._count = 0;
+  
 })(jQuery);
 
 /**
